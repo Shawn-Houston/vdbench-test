@@ -1,0 +1,43 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vdbench-configmap
+data:
+  vdbench-test.conf: |
+    *Auto Generated VDBench Parameter File
+    *4 raw disk, 0% random, 0% read
+    *SD:    Storage Definition
+    *WD:    Workload Definition
+    *RD:    Run Definition
+    debug=86
+    data_errors=10000
+    * dedupunit=4096
+    * dedupratio=2
+    * dedupflipflop=yes
+    * compratio=2
+    * SD's
+    sd=sd1,lun=/dev/xvda,size=50G,openflags=o_direct,hitarea=0,range=(0,10),threads=4,align=4096
+    sd=sd2,lun=/dev/xvdb,size=50G,openflags=o_direct,hitarea=0,range=(0,10),threads=4,align=4096
+    * sd=sd3,lun=/data/vdbench-test-data/testfile,size=50G,openflags=o_direct,hitarea=0,range=(0,10),threads=4,align=4096
+    * sd=sd4,lun=/data/vdbench-test-data/testfile,size=50G,openflags=o_direct,hitarea=0,range=(0,10),threads=4,align=4096
+    * sd=sd5,lun=/data/vdbench-test-data/testfile,size=50G,openflags=o_direct,hitarea=0,range=(0,10),threads=4,align=4096
+    * sd=sd6,lun=/data/vdbench-test-data/testfile,size=50G,openflags=o_direct,hitarea=0,range=(0,10),threads=4,align=4096
+    * sd=sd7,lun=/data/vdbench-test-data/testfile,size=50G,openflags=o_direct,hitarea=0,range=(0,10),threads=4,align=4096
+    * sd=sd8,lun=/data/vdbench-test-data/testfile,size=50G,openflags=o_direct,hitarea=0,range=(0,10),threads=4,align=4096
+    * sd=sd9,lun=/data/vdbench-test-data/testfile,size=50G,openflags=o_direct,hitarea=0,range=(0,10),threads=4,align=4096
+    * sd=sd10,lun=/data/vdbench-test-data/testfile,size=50G,openflags=o_direct,hitarea=0,range=(0,10),threads=4,align=4096
+    * WD's
+    wd=wd1,sd=(sd*),xfersize=8k,rdpct=0,seekpct=0
+    wd=wd2,sd=(sd*),xfersize=8k,rdpct=100,seekpct=0
+    wd=wd3,sd=(sd*),xfersize=8k,rdpct=0,seekpct=100
+    wd=wd4,sd=(sd*),xfersize=8k,rdpct=100,seekpct=100
+    wd=wd5,sd=(sd*),xfersize=8k,rdpct=50,seekpct=50
+    * RD's
+    * rd=run1,wd=wd1,elapsed=300,warmup=60,interval=60,pause=120,curve=(90),iorate=curve
+    * rd=run2,wd=wd2,elapsed=300,warmup=60,interval=60,pause=120,curve=(90),iorate=curve
+    * rd=run3,wd=wd3,elapsed=300,warmup=60,interval=60,pause=120,curve=(90),iorate=curve
+    * rd=run4,wd=wd4,elapsed=300,warmup=60,interval=60,pause=120,curve=(90),iorate=curve
+    rd=run5,wd=wd5,elapsed=300,warmup=60,interval=60,pause=120,curve=(90),iorate=curve
+    * rd=sf_curve,wd=wd5,elapsed=300,warmup=300,interval=60,pause=300,curve=(25,50,75),iorate=curve
+...

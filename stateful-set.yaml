@@ -1,0 +1,62 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: vdbench-test
+  name: vdbench-test
+spec:
+  serviceName: "vdbench-test" # References the headless service created above.
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vdbench-test
+  template:
+    metadata:
+      labels:
+        app: vdbench-test
+    spec:
+      volumes:
+      - name: vdbench-config
+        configMap:
+          name: vdbench-configmap # Mounts the ConfigMap containing the VDBench test definition.
+      containers:
+      - image: vdbench-test:latest
+        name: vdbench-test
+        command: ["/bin/bash", "-c"]
+        args:
+          - "cd /opt/vdbench && ./vdbench -f /etc/vdbench/vdbench-test.conf -o /tmp/results" # Runs VDBench with the configuration file from the ConfigMap and writes results to the dedicated PV.
+        volumeMounts:
+        - name: vdbench-config
+          mountPath: /etc/vdbench # Mounts the ConfigMap containing the VDBench test definition.
+#        - name: vdbench-data1
+#          mountPath: /data/vdbench-test-data1
+#        - name: vdbench-data2
+#          mountPath: /data/vdbench-test-data2
+        volumeDevices: # Use volumeDevices for block volumes
+        - name: vdbench-data1
+          devicePath: /dev/xvda # The path where the block device will be exposed inside the container
+        - name: vdbench-data2
+          devicePath: /dev/xvdb # The path where the block device will be exposed inside the container
+  volumeClaimTemplates:
+  - metadata:
+      name: vdbench-data1 # Name of the VolumeClaimTemplate.
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 300Gi # Request 100GB of storage for each VDBench replica.
+      storageClassName: "ocs-storagecluster-ceph-rbd"
+      volumeMode: Block
+#      volumeMode: Filesystem
+  - metadata:
+      name: vdbench-data2 # Name of the VolumeClaimTemplate.
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 300Gi # Request 100GB of storage for each VDBench replica.
+      storageClassName: "ocs-storagecluster-ceph-rbd"
+      volumeMode: Block
+#      volumeMode: Filesystem
+...

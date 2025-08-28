@@ -1,0 +1,19 @@
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: vdbench-test
+  name: vdbench-test
+spec:
+  to:
+    kind: Service
+    name: vdbench-test
+    weight: 100
+  port:
+    targetPort: web
+  wildcardPolicy: None
+  tls:
+    termination: Edge
+    insecureEdgeTerminationPolicy: Redirect # Redirects HTTP traffic to HTTPS
+...
