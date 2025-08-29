@@ -14,7 +14,7 @@ spec:
     # Expect a local directory to be streamed to OpenShift as a build source
     type: Git
     git: 
-      uri: http://gitlab.libvirt8/shouston/vdbench-test.git
+      uri: https://github.com/Shawn-Houston/vdbench-test.git
   strategy:
     type: Docker
     dockerStrategy:
