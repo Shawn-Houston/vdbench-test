@@ -20,15 +20,17 @@ spec:
       - name: vdbench-config
         configMap:
           name: vdbench-configmap # Mounts the ConfigMap containing the VDBench test definition.
+      - name: webroot-mount
+        persistentVolumeClaim:
+          claimName: webroot
       containers:
       - image: vdbench-test:latest
         name: vdbench-test
-        command: ["/bin/bash", "-c"]
-        args:
-          - "cd /opt/vdbench && ./vdbench -f /etc/vdbench/vdbench-test.conf -o /tmp/results" # Runs VDBench with the configuration file from the ConfigMap and writes results to the dedicated PV.
         volumeMounts:
         - name: vdbench-config
           mountPath: /etc/vdbench # Mounts the ConfigMap containing the VDBench test definition.
+        - name: webroot-mount
+          mountPath: /var/www/html
 #        - name: vdbench-data1
 #          mountPath: /data/vdbench-test-data1
 #        - name: vdbench-data2

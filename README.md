@@ -4,4 +4,6 @@
 
 ## Getting started
 
-You will need to get your own copy of vdbench. Do note this does not quite work... not yet...
+You will need to get your own copy of vdbench and the output is quite rustic.
+
+

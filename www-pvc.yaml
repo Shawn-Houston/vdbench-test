@@ -1,0 +1,14 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: webroot
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1G
+  storageClassName: ocs-storagecluster-cephfs
+  volumeMode: Filesystem
+...

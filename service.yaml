@@ -10,7 +10,7 @@ spec:
   - name: web
     port: 8080
     protocol: TCP
-    targetPort: 5570
+    targetPort: 8080
   selector:
     app: vdbench-test
   type: ClusterIP

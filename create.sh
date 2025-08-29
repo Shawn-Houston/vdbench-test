@@ -1,5 +1,6 @@
 #! /bin/bash
 
+oc create -f www-pvc.yaml
 oc create -f image-stream.yaml
 oc create -f build-config.yaml
 oc create -f config-map.yaml
